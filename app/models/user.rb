@@ -9,8 +9,26 @@ class User < ApplicationRecord
   has_many :posts
   has_many :comments, dependent: :destroy
   has_many :likes, dependent: :destroy
-  has_many :friendships_requester, foreign_key: :requester_id
-  has_many :friendships_requested, foreign_key: :requested_id
-  has_many :friends_requester, through: :friendships_requester, source: 'requested'
-  has_many :friends_requested, through: :friendships_requested, source: 'requester'
+
+  has_many :requester_friendships, foreign_key: :requester_id, class_name: 'Friendship'
+  has_many :requested_friendships, foreign_key: :requested_id, class_name: 'Friendship'
+
+  def friends
+    friends = []
+    friends = requester_friendships.map do |fri|
+                fri.requested if fri.status ==  1
+              end
+
+    friends += requested_friendships.map do |fri|
+                 fri.requester if fri.status ==  1
+               end
+    friends
+  end
+
+  def friends?(user_id)
+    res = friends.any? do |usr|
+            usr.id == user_id
+          end
+    res
+  end
 end
