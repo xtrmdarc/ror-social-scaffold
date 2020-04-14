@@ -7,10 +7,8 @@
           <span class="profile-link">
             <%= link_to 'See Profile',  user_path(invitation), class: 'profile-link' %>
           </span>
-          <% if invitation.id != current_user.id && current_user.pending_invitation?(invitation.id) %>
-            <button class="btn btn-primary friendship-invitation"> Accept </button>
-            <button class="btn btn-primary friendship-invitation"> Reject </button>
-          <% end %>
+          <%= link_to 'Accept', "accept_invitation/#{invitation.id}", class:"btn btn-primary friendship-invitation" %>
+          <%= link_to 'Decline', "reject_invitation/#{invitation.id}", method: 'DELETE', class:"btn btn-primary friendship-invitation" %>
         </div>
       </li>
     <% end %>

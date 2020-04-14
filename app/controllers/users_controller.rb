@@ -19,4 +19,14 @@ class UsersController < ApplicationController
     @invitations = current_user.pending_invitations
     render 'pending_invitations'
   end
+
+  def accept_invitation
+    current_user.accept_invitation(params[:user_id])
+    redirect_to users_path
+  end
+
+  def reject_invitation
+    current_user.reject_invitation(params[:user_id])
+    redirect_to users_path
+  end
 end

@@ -38,16 +38,32 @@ class User < ApplicationRecord
     @friendship.save
   end
 
-  def pending_invitation?(user_id)
-    @friendship = requester_friendships.where(requested_id: user_id).first
-    @friendship.status == 0
-  end
-
   def pending_invitations
     invitations = []
     invitations = requested_friendships.map do |usr|
                     usr.requester if usr.status ==  0
                   end
     invitations.compact
+  end
+
+  def invitation_sent?(user_id)
+    friendship = requester_friendships.where(requested_id: user_id).first
+    true if friendship && friendship.status == 0
+  end
+
+  def invitation_received?(user_id)
+    friendship = requested_friendships.where(requester_id: user_id).first
+    true if friendship && friendship.status == 0
+  end
+
+  def accept_invitation(user_id)
+    friendship = requested_friendships.where(requester_id: user_id).first
+    friendship.status = 1
+    friendship.save
+  end
+
+  def reject_invitation(user_id)
+    friendship = requested_friendships.where(requester_id: user_id).first
+    friendship.destroy
   end
 end

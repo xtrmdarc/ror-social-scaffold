@@ -7,13 +7,13 @@
           <span class="profile-link">
             <%= link_to 'See Profile',  user_path(user), class: 'profile-link' %>
           </span>
-          <% if current_user.requester_friendship || !current_user.requested_friendship %>
-            <%= link_to 'Add Friend', "sent_invitation/#{user.id}" , class:"btn btn-primary friendship-invitation" %>
-          <% elsif user.id != current_user.id && current_user.pending_invitation?(user.id) %>
+          <% if current_user.invitation_sent?(user.id) %>
             <button class="btn btn-primary friendship-invitation"> Pending Invitation </button>
-          <% else %>
-            <button class="btn btn-primary friendship-invitation"> Accept </button>
-            <button class="btn btn-primary friendship-invitation"> Decline </button>
+          <% elsif current_user.invitation_received?(user.id)%>
+            <%= link_to 'Accept', "accept_invitation/#{user.id}", class:"btn btn-primary friendship-invitation" %>
+            <%= link_to 'Decline', "reject_invitation/#{user.id}", method: 'DELETE', class:"btn btn-primary friendship-invitation" %>
+          <% elsif !current_user.friends?(user.id) && current_user.id != user.id %>
+            <%= link_to 'Add Friend', "sent_invitation/#{user.id}" , class:"btn btn-primary friendship-invitation" %>
           <% end %>
         </div>
       </li>
