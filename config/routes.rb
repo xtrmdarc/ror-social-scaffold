@@ -9,6 +9,8 @@ Rails.application.routes.draw do
     resources :comments, only: [:create]
     resources :likes, only: [:create, :destroy]
   end
+  get "sent_invitation/:requested_id", to:'users#request_friendship'
+  get "pending_invitations", to:"users#pending_invitations"
 
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
 end

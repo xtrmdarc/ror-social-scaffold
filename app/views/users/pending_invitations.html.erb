@@ -1,0 +1,18 @@
+<section class="users-section">
+  <ul class="users-list">
+    <% @invitations.each do |invitation| %>
+      <li>
+        Name: <%= invitation.name %>
+        <div class="user-actions">
+          <span class="profile-link">
+            <%= link_to 'See Profile',  user_path(invitation), class: 'profile-link' %>
+          </span>
+          <% if invitation.id != current_user.id && current_user.pending_invitation?(invitation.id) %>
+            <button class="btn btn-primary friendship-invitation"> Accept </button>
+            <button class="btn btn-primary friendship-invitation"> Reject </button>
+          <% end %>
+        </div>
+      </li>
+    <% end %>
+  </ul>
+</section>
