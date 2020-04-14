@@ -66,4 +66,13 @@ class User < ApplicationRecord
     friendship = requested_friendships.where(requester_id: user_id).first
     friendship.destroy
   end
+
+  def timeline_posts
+    user_ids = []
+    user_ids.push(id)
+    user_ids += friends.map do |fri|
+                  fri.id
+                end
+    Post.where(user_id: user_ids)
+  end
 end
