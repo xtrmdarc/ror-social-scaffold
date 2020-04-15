@@ -7,6 +7,9 @@ AllCops:
     - "Rakefile"
     - "README.md"
     - "node_modules/**/*"
+    - "bin/**/*"
+    - "config/*"
+    - "Gemfile"
 
   DisplayCopNames: true
 
@@ -40,6 +43,8 @@ Style/DefWithParentheses:
   Enabled: false
 Style/FrozenStringLiteralComment:
   EnforcedStyle: never
+Style/SafeNavigation: 
+  Enabled: false
 
 Layout/HashAlignment:
   EnforcedColonStyle: key

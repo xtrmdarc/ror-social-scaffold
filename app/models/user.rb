@@ -14,21 +14,20 @@ class User < ApplicationRecord
   has_many :requested_friendships, foreign_key: :requested_id, class_name: 'Friendship'
 
   def friends
-    friends = []
     friends = requester_friendships.map do |fri|
-                fri.requested if fri.status ==  1
-              end
+      fri.requested if fri.status == 1
+    end
 
     friends += requested_friendships.map do |fri|
-                 fri.requester if fri.status ==  1
-               end
+      fri.requester if fri.status == 1
+    end
     friends.compact
   end
 
   def friends?(user_id)
     res = friends.any? do |usr|
-            usr.id == user_id
-          end
+      usr.id == user_id
+    end
     res
   end
 
@@ -39,21 +38,20 @@ class User < ApplicationRecord
   end
 
   def pending_invitations
-    invitations = []
     invitations = requested_friendships.map do |usr|
-                    usr.requester if usr.status ==  0
-                  end
+      usr.requester if usr.status.zero?
+    end
     invitations.compact
   end
 
   def invitation_sent?(user_id)
     friendship = requester_friendships.where(requested_id: user_id).first
-    true if friendship && friendship.status == 0
+    true if friendship && friendship.status.zero?
   end
 
   def invitation_received?(user_id)
     friendship = requested_friendships.where(requester_id: user_id).first
-    true if friendship && friendship.status == 0
+    true if friendship && friendship.status.zero?
   end
 
   def accept_invitation(user_id)
@@ -70,9 +68,7 @@ class User < ApplicationRecord
   def timeline_posts
     user_ids = []
     user_ids.push(id)
-    user_ids += friends.map do |fri|
-                  fri.id
-                end
+    user_ids += friends.map(&:id)
     Post.where(user_id: user_ids)
   end
 end
