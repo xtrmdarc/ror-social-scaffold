@@ -1,5 +1,15 @@
 <section class="user-section">
-  <h2><%= "Name: #{@user.name}" %></h2>
+  <div class="user-header">
+    <h2><%= "Name: #{@user.name}" %></h2>
+    <% if current_user.invitation_sent?(@user.id) %>
+      <button class="btn btn-primary friendship-invitation"> Pending Invitation </button>
+    <% elsif current_user.invitation_received?(@user.id)%>
+      <%= link_to 'Accept', "accept_invitation/#{@user.id}", class:"btn btn-primary friendship-invitation" %>
+          <%= link_to 'Decline', "reject_invitation/#{@user.id}", method: 'DELETE', class:"btn btn-primary friendship-invitation" %>
+    <% elsif !current_user.friends?(@user.id) && current_user.id != @user.id %>
+      <%= link_to 'Add Friend', "sent_invitation/#{@user.id}" , class:"btn btn-primary friendship-invitation" %>            
+    <% end %>
+  </div>
   <article class="timeline">
     <h3>Recent posts:</h3>
     <ul class="posts">

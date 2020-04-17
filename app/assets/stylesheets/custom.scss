@@ -291,19 +291,43 @@ form {
     margin-bottom: 16px;
     text-transform: capitalize;
     font-size: 1.2em;
+    display: flex;
+
+    .user-actions {
+      margin-left: auto;
+      .friendship-invitation {
+        margin-left: 10px;
+      }
+    }
   }
 
   .profile-link {
     font-size: 0.8em;
-    margin: 0 0 8px 0;
+    // margin: 0 0 8px 0;
     color: $primary-color-dark;
   }
+}
+
+.friendship-invitation {
+  border-radius: 4px;
+  border-color: green;
+  background: white;
+  color: green;
+  padding: 5px;
+}
+
+.friendship-invitation:hover {
+  cursor: pointer;
 }
 
 .user-section {
   width: 100%;
   margin-left: 16px;
 
+  .user-header {
+    display: flex;
+    justify-content: space-between;
+  }
   h2 {
     text-transform: capitalize;
   }
