@@ -57,13 +57,14 @@ RSpec.describe User, type: :model do
     it 'validates if user is added to friend friendlist' do
       friend.save
       user.save
-      Friendship.create(requested_id: friend.id, requester_id: user.id, status: 1)
+      friend.send_invitation(user.id)
+      user.accept_invitation(friend.id)
       expect(friend.friends?(user.id)).to eql(true)
     end
     it 'validates if friend is added to users friendlist when user accept invitation' do
       friend.save
       user.save
-      Friendship.create(requested_id: user.id, requester_id: friend.id, status: 0)
+      friend.send_invitation(user.id)
       user.accept_invitation(friend.id)
       expect(user.friends?(friend.id)).to eql(true)
     end
