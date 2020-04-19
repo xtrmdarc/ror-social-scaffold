@@ -16,7 +16,7 @@ class UsersController < ApplicationController
   end
 
   def pending_invitations
-    @invitations = current_user.pending_invitations
+    @invitations = current_user.pending_invitations.all
     render 'pending_invitations'
   end
 
