@@ -12,11 +12,11 @@ class User < ApplicationRecord
 
   has_many :requester_friendships, foreign_key: :requester_id, class_name: 'Friendship'
   has_many :requested_friendships, foreign_key: :requested_id, class_name: 'Friendship'
-  
-  has_many :confirmed_friendships, -> { where status: 1 }, class_name: "Friendship", foreign_key: :requester_id
+
+  has_many :confirmed_friendships, -> { where status: 1 }, class_name: 'Friendship', foreign_key: :requester_id
   has_many :friends, through: :confirmed_friendships, source: :requested
 
-  has_many :pending_friendships, -> { where status: 0 }, class_name: "Friendship", foreign_key: :requested_id
+  has_many :pending_friendships, -> { where status: 0 }, class_name: 'Friendship', foreign_key: :requested_id
   has_many :pending_invitations, through: :pending_friendships, source: :requester
 
   def friends?(user_id)
