@@ -3,9 +3,13 @@
     <div class='post-attribution' >
       <%= link_to post.user.name, user_path(post.user), class: 'post-author' %>
     </div>
-    <div class='post-liking'>
+    <div class='post-liking' >
       <span class='post-date'> <%= post.created_at.strftime("%Y/%m/%d") %> </span>
-      <%= like_or_dislike_btn(post) %>
+      <span class="likes" >
+        <%= like_or_dislike_btn(post) %> 
+        <%= post.likes.count if post.likes.count.positive? %> 
+        <%= like_or_dislike_heart(post) %>
+      </span>
     </div>
   </div>
   <p class="post-content">
