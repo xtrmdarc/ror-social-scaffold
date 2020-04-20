@@ -66,14 +66,16 @@ class UserTest < ActiveSupport::TestCase
   test 'friend should be added to users friendlist' do
     @friend.save
     @user.save
-    Friendship.create(requested_id: @friend.id, requester_id: @user.id, status: 1)
+    @friend.send_invitation(@user.id)
+    @user.accept_invitation(@friend.id)
     assert @user.friends?(@friend.id)
   end
 
   test 'user should be added to friend friendlist' do
     @friend.save
     @user.save
-    Friendship.create(requested_id: @friend.id, requester_id: @user.id, status: 1)
+    @friend.send_invitation(@user.id)
+    @user.accept_invitation(@friend.id)
     assert @friend.friends?(@user.id)
   end
 

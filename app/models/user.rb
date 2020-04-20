@@ -13,19 +13,14 @@ class User < ApplicationRecord
   has_many :requester_friendships, foreign_key: :requester_id, class_name: 'Friendship'
   has_many :requested_friendships, foreign_key: :requested_id, class_name: 'Friendship'
 
-  def friends
-    friends = requester_friendships.map do |fri|
-      fri.requested if fri.status == 1
-    end
+  has_many :confirmed_friendships, -> { where status: 1 }, class_name: 'Friendship', foreign_key: :requester_id
+  has_many :friends, through: :confirmed_friendships, source: :requested
 
-    friends += requested_friendships.map do |fri|
-      fri.requester if fri.status == 1
-    end
-    friends.compact
-  end
+  has_many :pending_friendships, -> { where status: 0 }, class_name: 'Friendship', foreign_key: :requested_id
+  has_many :pending_invitations, through: :pending_friendships, source: :requester
 
   def friends?(user_id)
-    res = friends.any? do |usr|
+    res = friends.all.any? do |usr|
       usr.id == user_id
     end
     res
@@ -35,13 +30,6 @@ class User < ApplicationRecord
     @friendship = Friendship.new(requester_id: id, requested_id: user_id)
     @friendship.status = 0
     @friendship.save
-  end
-
-  def pending_invitations
-    invitations = requested_friendships.map do |usr|
-      usr.requester if usr.status.zero?
-    end
-    invitations.compact
   end
 
   def invitation_sent?(user_id)
@@ -58,6 +46,7 @@ class User < ApplicationRecord
     friendship = requested_friendships.where(requester_id: user_id).first
     friendship.status = 1
     friendship.save
+    Friendship.create(requester_id: id, requested_id: user_id, status: 1)
   end
 
   def reject_invitation(user_id)
@@ -68,7 +57,7 @@ class User < ApplicationRecord
   def timeline_posts
     user_ids = []
     user_ids.push(id)
-    user_ids += friends.map(&:id)
+    user_ids += friends.all.map(&:id)
     Post.where(user_id: user_ids)
   end
 end
