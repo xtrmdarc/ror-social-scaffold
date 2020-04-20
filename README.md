@@ -9,12 +9,7 @@
 
 ## Live Demo
 
-TBA
-
-
-## Getting Started
-
-To get a local copy up and running follow these simple example steps.
+[Live Demo Version](https://morning-sea-95076.herokuapp.com/)
 
 ### Prerequisites
 
@@ -37,8 +32,6 @@ Setup database with:
    rails db:migrate
 ```
 
-
-
 ### Usage
 
 Start server with:
@@ -57,13 +50,19 @@ Open `http://localhost:3000/` in your browser.
 
 > Tests will be added by Microverse students. There are no tests for initial features in order to make sure that students write all tests from scratch.
 
-### Deployment
-
-TBA
-
 ## Authors
 
-TBA
+👤 **Diego Antonio Reyes Coronado**
+
+- Github: [@xtrmdarc](https://github.com/xtrmdarc)
+- Twitter: [@diegoreyesco](https://twitter.com/DiegoAn91629127)
+- Linkedin: [diegoreyesco](https://www.linkedin.com/in/diego-reyes-coronado)
+
+👤 **Brenda Yucra**
+
+- Github: [@bren2102](https://github.com/bren2102) 
+- Twitter: [@BrendaYucra2](https://twitter.com/BrendaYucra)
+- Linkedin: [Brenda Yucra](https://www.linkedin.com/in/brenda-yucra-51980681/)
 
 ## 🤝 Contributing
 
@@ -74,12 +73,3 @@ Feel free to check the [issues page](issues/).
 ## Show your support
 
 Give a ⭐️ if you like this project!
-
-## Acknowledgments
-
-TBA
-
-## 📝 License
-
-TBA
-
